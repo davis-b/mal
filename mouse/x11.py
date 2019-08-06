@@ -9,11 +9,6 @@ from .base import BaseCursor
 
 
 class Cursor(BaseCursor):
-	class buttons:
-		left = 1
-		middle = 2
-		right = 3
-	
 	def __init__(self, display=None):
 		if not display:
 			display = Display(environ['DISPLAY'])

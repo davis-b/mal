@@ -3,6 +3,15 @@ from time import sleep
 
 
 class BaseCursor:
+	class buttons:
+		left = 1
+		middle = 2
+		right = 3
+		mousewheel_up = 4
+		mousehweel_down = 5
+		mousewheel_left = 6
+		mousewheel_right = 7
+
 	def __init__(self):
 		pass
 
@@ -21,9 +30,7 @@ class BaseCursor:
 
 	def move_by(self, x, y):
 		start_x, start_y = self.pos
-		new_x = max(start_x + x, 0)
-		new_y = max(start_y + y, 0)
-		self.move_to(new_x, new_y)
+		self.move_to(start_x + x, start_y + y)
 
 	def click(self, button, xy=None):
 		if xy:

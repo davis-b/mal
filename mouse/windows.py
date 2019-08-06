@@ -10,22 +10,49 @@ class Cursor_POINT(ctypes.Structure):
     _fields_ = [("x", ctypes.c_ulong),
                 ("y", ctypes.c_ulong)]
 				
+mousewheel_delta = 120
+windows_keycodes = {
+	'left': 2,
+	'middle': 32,
+	'right': 8,
+	'mousewheel_vertical': 0x800,
+	'mousewheel_horizontal': 0x1000,
+}
+
 class Cursor(BaseCursor):
-	class buttons:
-		left = 2
-		middle = 32
-		right = 8
 
 	def __init__(self):
-		pass
+		self._keycode_transformations = {
+			self.buttons.left: windows_keycodes['left'],
+			self.buttons.middle: windows_keycodes['middle'],
+			self.buttons.right: windows_keycodes['right'],
+			self.buttons.mousewheel_up: windows_keycodes['mousewheel_vertical'],
+			self.buttons.mousehweel_down: windows_keycodes['mousewheel_vertical'],
+			self.buttons.mousewheel_left: windows_keycodes['mousewheel_horizontal'],
+			self.buttons.mousewheel_right: windows_keycodes['mousewheel_horizontal'],
+		}
 
 	def btn_down(self, button):
-		# NOTE Function has been superseded by SendInput
-		u32.mouse_event(button, 0, 0, 0, 0)
+		windows_keycode = windows_keycodes[button]
+		if windows_keycode == windows_keycodes['mousewheel_horizontal']:
+			direction = 1 if button == self.buttons.mousewheel_right else -1
+			self.btn(windows_keycode, dwData=direction * mousewheel_delta)
+		if windows_keycode == windows_keycodes['mousewheel_vertical']:
+			direction = 1 if button == self.buttons.mousewheel_up else -1
+			self.btn(windows_keycode, dwData=direction * mousewheel_delta)
+		else:
+			self.btn(windows_keycode)
 	
-	def btn_up(self):
+	def btn_up(self, button):
+		windows_keycode = windows_keycodes[button]
+		if windows_keycode == windows_keycodes['mousewheel_horizontal'] or windows_keycode == windows_keycodes['mousewheel_vertical']:
+			return
+		else:
+			self.btn(windows_keycode * 2)
+	
+	def btn(self, windows_keycode, dwData=0):
 		# NOTE Function has been superseded by SendInput
-		u32.mouse_event(button * 2, 0, 0, 0, 0)
+		u32.mouse_event(windows_keycode, 0, 0, dwData, 0)
 	
 	@property
 	def pos(self):
