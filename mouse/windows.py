@@ -36,21 +36,21 @@ class Cursor(BaseCursor):
 		windows_keycode = windows_keycodes[button]
 		if windows_keycode == windows_keycodes['mousewheel_horizontal']:
 			direction = 1 if button == self.buttons.mousewheel_right else -1
-			self.btn(windows_keycode, dwData=direction * mousewheel_delta)
+			self._btn(windows_keycode, dwData=direction * mousewheel_delta)
 		if windows_keycode == windows_keycodes['mousewheel_vertical']:
 			direction = 1 if button == self.buttons.mousewheel_up else -1
-			self.btn(windows_keycode, dwData=direction * mousewheel_delta)
+			self._btn(windows_keycode, dwData=direction * mousewheel_delta)
 		else:
-			self.btn(windows_keycode)
+			self._btn(windows_keycode)
 	
 	def btn_up(self, button):
 		windows_keycode = windows_keycodes[button]
 		if windows_keycode == windows_keycodes['mousewheel_horizontal'] or windows_keycode == windows_keycodes['mousewheel_vertical']:
 			return
 		else:
-			self.btn(windows_keycode * 2)
+			self._btn(windows_keycode * 2)
 	
-	def btn(self, windows_keycode, dwData=0):
+	def _btn(self, windows_keycode, dwData=0):
 		# NOTE Function has been superseded by SendInput
 		u32.mouse_event(windows_keycode, 0, 0, dwData, 0)
 	
