@@ -8,7 +8,7 @@ class BaseCursor:
 		middle = 2
 		right = 3
 		mousewheel_up = 4
-		mousehweel_down = 5
+		mousewheel_down = 5
 		mousewheel_left = 6
 		mousewheel_right = 7
 
