@@ -33,7 +33,7 @@ class Cursor(BaseCursor):
 		}
 
 	def btn_down(self, button):
-		windows_keycode = windows_keycodes[button]
+		windows_keycode = self._keycode_transformations[button]
 		if windows_keycode == windows_keycodes['mousewheel_horizontal']:
 			direction = 1 if button == self.buttons.mousewheel_right else -1
 			self._btn(windows_keycode, dwData=direction * mousewheel_delta)
@@ -44,7 +44,7 @@ class Cursor(BaseCursor):
 			self._btn(windows_keycode)
 	
 	def btn_up(self, button):
-		windows_keycode = windows_keycodes[button]
+		windows_keycode = self._keycode_transformations[button]
 		if windows_keycode == windows_keycodes['mousewheel_horizontal'] or windows_keycode == windows_keycodes['mousewheel_vertical']:
 			return
 		else:
