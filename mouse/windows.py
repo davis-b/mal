@@ -27,7 +27,7 @@ class Cursor(BaseCursor):
 			self.buttons.middle: windows_keycodes['middle'],
 			self.buttons.right: windows_keycodes['right'],
 			self.buttons.mousewheel_up: windows_keycodes['mousewheel_vertical'],
-			self.buttons.mousehweel_down: windows_keycodes['mousewheel_vertical'],
+			self.buttons.mousewheel_down: windows_keycodes['mousewheel_vertical'],
 			self.buttons.mousewheel_left: windows_keycodes['mousewheel_horizontal'],
 			self.buttons.mousewheel_right: windows_keycodes['mousewheel_horizontal'],
 		}
